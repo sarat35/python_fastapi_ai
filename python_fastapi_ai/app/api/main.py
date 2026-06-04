@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from routes import llm_model_judge
 
 app = FastAPI(
     title="Python FastAPI Example",
@@ -21,3 +22,5 @@ def example(request: ExampleRequest):
         "name": request.name,
         "message": request.message or f"Hello, {request.name}!",
     }
+
+app.include_router(llm_model_judge.router)
