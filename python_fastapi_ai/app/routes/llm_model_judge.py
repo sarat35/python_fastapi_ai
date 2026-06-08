@@ -7,7 +7,7 @@ from fastapi import APIRouter, HTTPException
 router = APIRouter()
 
 
-@router.get("/llm_model_judge_question")
+@router.get("/api/fastapi/llm/model_judge")
 def llm_model_judge_question():
     """Generate a question, collect LLM answers, and rank them with a judge model."""
     try:
@@ -71,6 +71,7 @@ Here are the responses from each competitor:
 Now respond with the JSON with the ranked order of the competitors, nothing else. Do not include markdown formatting or code blocks."""
 
         judge_messages = [{"role": "user", "content": judge}]
+        print("judge_messages:", judge_messages)
         judge_client = OpenAI(api_key=openai_api_key)
         response = judge_client.chat.completions.create(
             model="gpt-5-mini",
@@ -90,7 +91,6 @@ Now respond with the JSON with the ranked order of the competitors, nothing else
             "question": question,
             "competitors": competitors,
             "answers": answers,
-            "ranks": ranks,
             "rankings": rankings,
         }
     except Exception as e:
