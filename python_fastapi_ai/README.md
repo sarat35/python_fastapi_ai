@@ -34,6 +34,10 @@ cd python_fastapi_ai\app
 python run.py
 ```
 
+Run app
+--------
+uvicorn app.api.main:app --reload
+
 Server runs at `http://localhost:7000`.
 
 ## Test with Postman
