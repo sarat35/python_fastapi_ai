@@ -6,3 +6,7 @@ openai
 openai-agents
 anthropic
 python-dotenv
+python-docx
+gradio
+requests
+dotenv
