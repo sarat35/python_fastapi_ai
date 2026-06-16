@@ -24,8 +24,8 @@ def _serialize_output(output: Any) -> Any:
     return str(output)
 
 
-@router.get("/api/fastapi/openai/agents/tools")
-async def openai_agents_tools():
+@router.get("/api/fastapi/openai/agents/tools_handoff")
+async def openai_agents_tools_handoff():
     if not os.getenv("OPENAI_API_KEY"):
         raise HTTPException(status_code=500, detail="OPENAI_API_KEY is not set")
 
@@ -111,9 +111,9 @@ async def openai_agents_tools():
             model="gpt-4o-mini",
         )
 
-        message = "Write a cold sales email addressed to Dear CEO from Alice"
+        message = "Write a cold sales email addressed to Dear Customer from Sarat"
 
-        with trace("OpenAI Agents Tools Demo"):
+        with trace("OpenAI Agents Tools Handoff Demo"):
             result = await Runner.run(sales_manager, message)
 
         return {"result": _serialize_output(result.final_output)}
