@@ -3,3 +3,4 @@
 __init__*
 .venv/
 __pycache__/
+.DS_Store

@@ -26,8 +26,13 @@ def _serialize_output(output: Any) -> Any:
 
 
 def _get_model() -> OpenAIChatCompletionsModel:
-    google_api_key = os.getenv("GOOGLE_API_KEY")
+    
     openai_api_key = os.getenv("OPENAI_API_KEY")
+    google_api_key = os.getenv("GOOGLE_API_KEY")
+
+    if openai_api_key:
+        client = AsyncOpenAI(api_key=openai_api_key, base_url="https://api.openai.com/v1")
+        return OpenAIChatCompletionsModel(model="gpt-4o-mini", openai_client=client)
 
     if google_api_key:
         client = AsyncOpenAI(
@@ -36,10 +41,7 @@ def _get_model() -> OpenAIChatCompletionsModel:
         )
         return OpenAIChatCompletionsModel(model="gemini-2.0-flash", openai_client=client)
 
-    if openai_api_key:
-        client = AsyncOpenAI(api_key=openai_api_key, base_url="https://api.openai.com/v1")
-        return OpenAIChatCompletionsModel(model="gpt-4o-mini", openai_client=client)
-
+    
     raise HTTPException(
         status_code=500,
         detail="GOOGLE_API_KEY or OPENAI_API_KEY must be set",
