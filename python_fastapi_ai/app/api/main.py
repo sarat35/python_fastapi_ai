@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from app.routes import llm_model_judge
 from app.routes import agents_tools
 from app.routes.openai import agents_tools_handoff as openai_agents_tools_handoff
+from app.routes.openai import aitools_gaurdrails as openai_aitools_guardrails
 
 
 app = FastAPI(
@@ -29,3 +30,4 @@ def example(request: ExampleRequest):
 app.include_router(llm_model_judge.router)
 app.include_router(agents_tools.router)
 app.include_router(openai_agents_tools_handoff.router)
+app.include_router(openai_aitools_guardrails.router)
