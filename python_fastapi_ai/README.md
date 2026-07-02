@@ -53,5 +53,7 @@ Server runs at `http://localhost:7000`.
   "message": "hello from Postman"
 }
 ```
+# For Crew AI , install uv
+uv tool install crewai==1.14.4
 
 Interactive API docs: `http://localhost:7000/docs`
