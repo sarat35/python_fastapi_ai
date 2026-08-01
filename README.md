@@ -5,7 +5,7 @@ A Python 3.12 FastAPI example project with a basic REST endpoint and an LLM mode
 ## What it contains
 
 - `app/api/main.py` creates the FastAPI application and the example endpoint.
-- `app/routes/llm_model_judge.py` generates an evaluation question, gets answers from OpenAI and Gemini, and asks an OpenAI model to rank them.
+- `app/routes/llm_model_judge.py` generates an evaluation question, gets answers from two OpenAI models, and asks an OpenAI model to rank them.
 - `app/run.py` starts Uvicorn on `http://localhost:7000` with reload enabled.
 - `app/api/llm_model_judge.py` is a standalone experimentation script; it is not imported by the web server.
 
@@ -14,7 +14,6 @@ A Python 3.12 FastAPI example project with a basic REST endpoint and an LLM mode
 - [uv](https://docs.astral.sh/uv/getting-started/installation/)
 - Python 3.12 (uv will install it automatically when needed)
 - An OpenAI API key for the model-judge endpoint
-- A Google AI API key for the model-judge endpoint
 
 ## Setup
 
@@ -27,11 +26,10 @@ uv sync
 
 `uv sync` creates `.venv` and installs the exact versions recorded in `uv.lock`.
 
-Create a `.env` file in this directory with the keys required by the LLM comparison route:
+Create a `.env` file in this directory with the key required by the LLM comparison route:
 
 ```dotenv
 OPENAI_API_KEY=your_openai_api_key
-GOOGLE_API_KEY=your_google_ai_api_key
 ```
 
 Do not commit `.env` or its secrets.
@@ -51,14 +49,14 @@ The service is available at `http://localhost:7000`; interactive OpenAPI documen
 Send a JSON body such as:
 
 ```json
-{
-  "name": "test",
-  "message": "hello from Postman"
-}
+  {
+    "name": "test",
+    "message": "hello from Postman"
+  }
 ```
 
 The route returns the submitted name and message (or a greeting when `message` is omitted).
 
 ### `GET /api/fastapi/llm/model_judge`
 
-This route makes API requests to OpenAI and Google Gemini, then returns the generated question, each model response, and the ranking. It needs both environment variables above and may incur provider charges.
+This route makes API requests to OpenAI, then returns the generated question, each model response, and the ranking. It needs the environment variable above and may incur provider charges.
